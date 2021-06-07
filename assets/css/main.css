@@ -942,13 +942,11 @@ table tfoot td {
 }
 
 .about .cover-author-image {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 300px;
   margin: 0 auto 10px;
-  -webkit-border-radius: 100%;
-          border-radius: 100%;
   overflow: hidden;
-  background-color: #333030;
+  background-color: #FFFFFF;
 }
 
 .about img {
