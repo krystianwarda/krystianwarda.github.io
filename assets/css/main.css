@@ -1402,23 +1402,22 @@ a.newer-posts:hover {
             box-shadow: 0 1px 1px 0 rgba(31, 35, 46, 0.15);
   }
   .sidebar footer {
-    margin-bottom: 10px;
+    margin-bottom: 2px;
   }
   .about {
     text-align: center;
     max-width: 480px;
-    margin: 10px auto auto;
+    margin: 2px auto auto;
   }
   .about img {
     width: 100px;
     height: 150px;
     -webkit-border-radius: 10px;
             border-radius: 10px;
-    margin-bottom: 4px;
   }
 
   .content-box {
-    padding: 20px 10px;
+    padding: 5px 2px;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
