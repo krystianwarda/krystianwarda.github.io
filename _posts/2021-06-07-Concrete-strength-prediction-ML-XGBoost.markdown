@@ -11,10 +11,6 @@ Analiza bazy danych 1030 próbek betonowych i ich składów z użyciem uczenia m
 
 
 
-
-
-
-
 Przykład pierwszych pozycji w bazie danych
 ![baza danych]({{site.baseurl}}/assets/img/0_baza_danych.png)
 
