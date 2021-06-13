@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.jekyll-cache",
+    "\\assets",
+    "\\assets\\css",
+    "\\assets\\img",
+    "\\assets\\img\\favicon",
+    "\\_includes",
+    "\\_layouts",
+    "\\_posts"
+  ],
+  "SelectedNode": "\\assets\\img\\favicon\\apple-touch-icon-72x72.png",
+  "PreviewInSolutionExplorer": false
+}
