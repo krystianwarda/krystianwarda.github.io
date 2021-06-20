@@ -43,7 +43,7 @@ div.desc {
 
 <div class="gallery">
   <a target="_blank" href="/assets/img/QSP_prefab">
-    <img src="/assets/img/QSP_prefab.png" alt="Prefab" width="600" height="400">
+    <img src="../assets/img/QSP_prefab.png" alt="Prefab" width="600" height="400">
   </a>
   <div class="desc">Prefabricated elements</div>
 </div>
@@ -121,7 +121,7 @@ Summary of dataframe rows by building floor:
 ![prefab_describe]({{site.baseurl}}/assets/img/QSB_finishingsbyfloor.png)
 
 ### 2. PROJECT STRUCTURE
-![prefab_describe]({{site.baseurl}}/assets/img/QSB_project_structure.png)
+![project_structure]({{site.baseurl}}/assets/img/QSB_project_structure.png)
 
 ### Setup.py
 Package and distribution managment placed at the root of repository, due to module package structure of the project.
