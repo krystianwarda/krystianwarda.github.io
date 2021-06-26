@@ -42,7 +42,7 @@ div.desc {
 <body>
 
 <div class="gallery">
-  <a target="_blank" href="/assets/img/QSP_prefab">
+  <a target="_blank" href="/assets/img/QSP_prefab.png">
     <img src="../assets/img/QSP_prefab.png" alt="Prefab" width="600" height="400">
   </a>
   <div class="desc">Prefabricated elements</div>
@@ -131,4 +131,11 @@ A pip requirements file is placed at the root of repository. It specifies the de
 
 ### Modules
 Modules allows separating code into parts holding related data and functionality. The division allows to expand the functions, without the risk of breaking whole program.
+
+
+### 3. Results
+
+Results are generated to Excel spreedsheets. 
+
+
 

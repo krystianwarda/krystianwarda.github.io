@@ -1,0 +1,12 @@
+I"u<p>Database dedicated for manufacturing and controlling purposes.</p>
+
+<h3 id="1-introduction">1. Introduction</h3>
+
+<p>Database was created using mySQL.</p>
+
+<p>MySQL database scheme:
+<br />
+<img src="/assets/img/sql_concrete_scheme.PNG" alt="prefab_head" /></p>
+
+<p><input type="image" src="/assets/img/sql_concrete_scheme.PNG" alt="Submit" width="48" height="48" /></p>
+:ET

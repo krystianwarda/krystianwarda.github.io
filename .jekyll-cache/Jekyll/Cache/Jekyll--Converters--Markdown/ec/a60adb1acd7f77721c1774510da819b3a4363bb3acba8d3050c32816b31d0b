@@ -1,0 +1,40 @@
+I"ç<p>Database made using mySQL dedicated for manufacturing process of concrete elements in factory. Controlling functions available through integrating database with python.</p>
+
+<h3 id="1-introduction">1. Introduction</h3>
+
+<p>Database was created using mySQL.</p>
+
+<p>MySQL database scheme:
+<br />
+ <input type="image" src="/assets/img/sql_concrete_scheme.PNG" alt="Submit" width="600" height="400" /> 
+<br /></p>
+
+<p>First chain of this process is an orders list, containing information about project, Client, date of the order, number of order and volume of needed concrete in cubic meters.</p>
+
+<p><br />
+<img src="/assets/img/sql_zlecenia_tabela.PNG" alt="prefab_describe" />
+<br /></p>
+
+<p>Depending on the recipe for concrete, different ratio between the ingredients has to be applied to recive the conrete with expected properties. Recipes with different ingredients ratio needed to produce 1 cubic meter of concrete are shown in the table.</p>
+
+<p><br />
+<img src="/assets/img/sql_receptury_head.PNG" alt="prefab_describe" />
+<br /></p>
+
+<p>Calculating the usage of ingredients are key for controlling purposes of tankage. Cement silo and other construction materials needed for production have to be regulary refilled.</p>
+
+<p><br />
+<img src="/assets/img/sql_raport_surowce.PNG" alt="prefab_describe" />
+<br /></p>
+
+<h3 id="2-graphs-from-database-using-python">2. Graphs from database using python</h3>
+
+<p><br />
+ <input type="image" src="/assets/img/sql_produkcja_cement_recepty.png" alt="Submit" width="650" height="400" /> 
+<br /></p>
+
+<p><br />
+ <input type="image" src="/assets/img/sql_cement_zbiornik.png" alt="Submit" width="650" height="400" /> 
+<br /></p>
+
+:ET
