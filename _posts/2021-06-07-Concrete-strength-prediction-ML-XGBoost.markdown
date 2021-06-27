@@ -3,7 +3,7 @@ layout: post
 title: Concrete strength prediction - ML - XGBoost
 date: 2021-06-07 00:00:00 +0300
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
-img: post_ml_xgboost.jpg # Add image post (optional)
+img: xgboost.JPG # Add image post (optional)
 tags: [machine-learning, python] # add tag
 ---
 
