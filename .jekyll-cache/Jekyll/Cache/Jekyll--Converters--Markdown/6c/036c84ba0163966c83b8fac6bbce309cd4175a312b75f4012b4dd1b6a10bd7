@@ -1,0 +1,71 @@
+I"�<p>The Goal of this project to is to predict the concrete strength with neural network. Project data set consist of 1030 samples of concrete, with specified ingriedients amounts used to create a sample, compressive strength and the age of the sample in the day of measurement.</p>
+
+<h3 id="1-introduction">1. Introduction</h3>
+<p>In the concrete factory to maintain quality assurance on high level, the concrete used for construction elements has to be tested continuously.
+In modern prefabricated concrete elements factories process of concrete strength testing is a daily basis. 
+Production technologist selects ingredients for a batch to achive particular properties of concrete.</p>
+
+<p>Database on which the research was performed consist of following ingredients: <br />
+Cement, Blast Furnace Slag, Fly Ash, Water, Superplasticizer, Coarse Aggregate, Fine Aggregate.</p>
+
+<p>To predict concrete compressive strength of a particular batch, XGBoost machine learning model will be used. 
+XGBoost is an open-source software library which provides a regularizing gradient boosting framework.</p>
+
+<p>Here is a quote about XGBoost from Quora website:</p>
+<blockquote cite="https://www.quora.com/What-is-the-difference-between-the-R-gbm-gradient-boosting-machine-and-xgboost-extreme-gradient-boosting">
+The name xgboost, though, actually refers to the engineering goal to push the limit of computations resources for boosted tree algorithms. Which is the reason why many people use xgboost.
+</blockquote>
+
+<p>In the table presented below, first rows of database are presented:
+<img src="/assets/img/0_baza_danych.png" alt="baza danych" /></p>
+
+<p>Podsumowanie zawartości bazy danych:
+<img src="/assets/img/0_podsumowanie.png" alt="podsumowanie bazy danych" /></p>
+
+<p>Zobrazowanie 
+<img src="/assets/img/outliers.png" alt="Odstające wartości" /></p>
+
+<p><img src="/assets/img/analiza_wielowymiarowa.png" alt="Analiza wymiarowa" /></p>
+
+<p><img src="/assets/img/analiza_wykresy.png" alt="Wybrane wykresy analizy" /></p>
+
+<p><img src="/assets/img/wykresy_podkreslenie.png" alt="Wybranie kluczowych wartości" /></p>
+
+<p><img src="/assets/img/wykres_popiol_zuzel.png" alt="Wykres popiół-żużel" /></p>
+
+<p><img src="/assets/img/zaleznosc_skladnikow.png" alt="Mapa zależności składników" /></p>
+
+<p><img src="/assets/img/wykresy_gaussa.png" alt="Wykresy Gaussa" /></p>
+
+<p><img src="/assets/img/wybrany_wykres_gaussa.png" alt="Wybrany wykres Gaussa" /></p>
+
+<p><img src="/assets/img/01_model.png" alt="Model 01" />
+<img src="/assets/img/01_tabela.png" alt="Tabela 01" />
+<img src="/assets/img/01_wykres.png" alt="Wykres 01" /></p>
+
+<p><img src="/assets/img/02_model.png" alt="Model 02" />
+<img src="/assets/img/02_tabela.png" alt="Tabela 02" /></p>
+
+<p><img src="/assets/img/03_model.png" alt="Model 03" />
+<img src="/assets/img/03_tabela.png" alt="Tabela 03" />
+<img src="/assets/img/03_wykres.png" alt="Wykres 03" /></p>
+
+<p><img src="/assets/img/04_model.png" alt="Model 04" />
+<img src="/assets/img/04_tabela.png" alt="Tabela 04" /></p>
+
+<p><img src="/assets/img/05_model.png" alt="Model 05" />
+<img src="/assets/img/05_tabela.png" alt="Tabela 05" /></p>
+
+<p><img src="/assets/img/06_model.png" alt="Model 06" />
+<img src="/assets/img/06_tabela.png" alt="Tabela 06" /></p>
+
+<p><img src="/assets/img/07_model.png" alt="Model 07" />
+<img src="/assets/img/07_tabela.png" alt="Tabela 07" /></p>
+
+<p><img src="/assets/img/08_model.png" alt="Model 08" />
+<img src="/assets/img/08_tabela.png" alt="Tabela 08" /></p>
+
+<p>Text 2</p>
+
+<p>Text 3</p>
+:ET

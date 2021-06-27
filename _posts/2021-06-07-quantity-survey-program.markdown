@@ -2,12 +2,17 @@
 layout: post
 title: Quantity survey program
 date: 2021-06-07 00:00:00 +0300
-description: Program that helps with cost-estimation. # Add post description (optional)
+description: Code that helps with cost-estimation. # Add post description (optional)
 img: engineering.jpg # Add image post (optional)
 tags: [construction, python] # add tag
 ---
 
 Quantity survey program is a code written in python programming langugage, which calculate the amounts of construction material needed for particular project based on datasets from marked PDF drawings.
+
+Project can be viewed at following github page:
+<br>
+<a href="https://github.com/krystianwarda/quantity-survey-bot-2/tree/master/quantity-survey-bot-2">https://github.com/krystianwarda/quantity-survey-bot-2/tree/master/quantity-survey-bot-2</a>
+<br>
 
 ### 1. Introduction
 
@@ -135,7 +140,8 @@ Modules allows separating code into parts holding related data and functionality
 
 ### 3. Results
 
-Results are generated to Excel spreedsheets. 
+Results are generated to Excel spreedsheets. <br>
+![prefab_head]({{site.baseurl}}/assets/img/QSB_results.PNG)
 
 
 

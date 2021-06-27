@@ -1,0 +1,58 @@
+I"�	<p>The Goal of this project to is to predict the concrete strength with neural network. Project data set consist of 1030 samples of concrete, with specified ingriedients amounts used to create a sample, compressive strength and the age of the sample in the day of measurement.</p>
+
+<h3 id="1-introduction">1. Introduction</h3>
+<p>Analiza bazy danych 1030 próbek betonowych i ich składów z użyciem uczenia maszynowego (ML).</p>
+
+<p>In the table presented below, first rows of database are presented:
+<img src="/assets/img/0_baza_danych.png" alt="baza danych" /></p>
+
+<p>Podsumowanie zawartości bazy danych:
+<img src="/assets/img/0_podsumowanie.png" alt="podsumowanie bazy danych" /></p>
+
+<p>Zobrazowanie 
+<img src="/assets/img/outliers.png" alt="Odstające wartości" /></p>
+
+<p><img src="/assets/img/analiza_wielowymiarowa.png" alt="Analiza wymiarowa" /></p>
+
+<p><img src="/assets/img/analiza_wykresy.png" alt="Wybrane wykresy analizy" /></p>
+
+<p><img src="/assets/img/wykresy_podkreslenie.png" alt="Wybranie kluczowych wartości" /></p>
+
+<p><img src="/assets/img/wykres_popiol_zuzel.png" alt="Wykres popiół-żużel" /></p>
+
+<p><img src="/assets/img/zaleznosc_skladnikow.png" alt="Mapa zależności składników" /></p>
+
+<p><img src="/assets/img/wykresy_gaussa.png" alt="Wykresy Gaussa" /></p>
+
+<p><img src="/assets/img/wybrany_wykres_gaussa.png" alt="Wybrany wykres Gaussa" /></p>
+
+<p><img src="/assets/img/01_model.png" alt="Model 01" />
+<img src="/assets/img/01_tabela.png" alt="Tabela 01" />
+<img src="/assets/img/01_wykres.png" alt="Wykres 01" /></p>
+
+<p><img src="/assets/img/02_model.png" alt="Model 02" />
+<img src="/assets/img/02_tabela.png" alt="Tabela 02" /></p>
+
+<p><img src="/assets/img/03_model.png" alt="Model 03" />
+<img src="/assets/img/03_tabela.png" alt="Tabela 03" />
+<img src="/assets/img/03_wykres.png" alt="Wykres 03" /></p>
+
+<p><img src="/assets/img/04_model.png" alt="Model 04" />
+<img src="/assets/img/04_tabela.png" alt="Tabela 04" /></p>
+
+<p><img src="/assets/img/05_model.png" alt="Model 05" />
+<img src="/assets/img/05_tabela.png" alt="Tabela 05" /></p>
+
+<p><img src="/assets/img/06_model.png" alt="Model 06" />
+<img src="/assets/img/06_tabela.png" alt="Tabela 06" /></p>
+
+<p><img src="/assets/img/07_model.png" alt="Model 07" />
+<img src="/assets/img/07_tabela.png" alt="Tabela 07" /></p>
+
+<p><img src="/assets/img/08_model.png" alt="Model 08" />
+<img src="/assets/img/08_tabela.png" alt="Tabela 08" /></p>
+
+<p>Text 2</p>
+
+<p>Text 3</p>
+:ET
