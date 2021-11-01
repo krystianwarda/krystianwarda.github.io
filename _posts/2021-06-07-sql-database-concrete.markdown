@@ -47,11 +47,18 @@ Calculating the usage of ingredients are key for controlling purposes of tankage
 
 ### 2. Graphs from database using python
 
-Graph presented below is showing monthly production capacity in cubic meters of concrete with a breakdown by recipe type.
+Graph presented below shows demand on concrete [m3] from Clients with a breakdown into product type
 
 <br>
- <input type="image" src="/assets/img/sql_produkcja_cement_recepty.png" alt="Submit" width="650" height="400"> 
+ <input type="image" src="/assets/img/zlecenia.png" alt="Submit" width="650" height="400"> 
 <br>
+
+
+Graph presented below shows production volume in m3 of concrete, broken down by products
+<br>
+ <input type="image" src="/assets/img/wielkosc_produkcji.png" alt="Submit" width="650" height="400"> 
+<br>
+
 
 As stated before ingredients for concrete production are crucial and have to be routinely refilled. Purpose of graph presented below is the control function for cement silo. The graph is showing the process of cement consumption and refill. 
 
