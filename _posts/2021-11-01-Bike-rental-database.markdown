@@ -15,8 +15,8 @@ Maintenance-free bike rentals database
 Code can be viewed at following github page:
 <br>
 <a href="
-https://github.com/krystianwarda/bike_rental_pyspark">
-https://github.com/krystianwarda/bike_rental_pyspark</a>
+https://github.com/krystianwarda/Pyspark-Ford-GO-bike">
+https://github.com/krystianwarda/Pyspark-Ford-GO-bike</a>
 <br>
 
 Code can be viewed at following kaggle page:
