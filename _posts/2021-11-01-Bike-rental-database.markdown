@@ -1,13 +1,16 @@
 ---
 layout: post
-title: Exploratory Data Analysis with Pyspark
+title: Exploratory Data Analysis of bike rentals database with Pyspark
 date: 2021-11-01 00:00:00 +0300
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
-img: rower.JPG # Add image post (optional)
+img: rower.jpg # Add image post (optional)
 tags: [pyspark, python] # add tag
 ---
 
-Exploratory Data Analysis of maintenance-free bike rentals database.
+Maintenance-free bike rentals database
+
+<br>
+<br>
 
 Code can be viewed at following github page:
 <br>
@@ -18,145 +21,548 @@ https://github.com/krystianwarda/bike_rental_pyspark</a>
 
 
 
-### 1. Introduction
-In the concrete factory to maintain quality assurance on high level, the concrete used for construction elements has to be tested continuously.
-In modern prefabricated concrete elements factories process of concrete strength testing is a daily basis. 
-Production technologist selects ingredients for a batch to achive particular properties of concrete.
+### 1. Context
+This data set is taken from https://www.fordgobike.com/system-data and represents trips taken by members of the service for month of February of 2019.
 
-Database on which the research was performed consist of following ingredients: <br>
-Cement - measured in kg/m3,<br>
-Blast Furnace Slag - measured in kg/m3, [pol., 'Żużel'], <br>
-Fly Ash- measured in kg/m3, [pol., 'Popiół lotny'], <br>
-Water - measured in kg/m3, [pol., 'Woda'], <br>
-Superplasticizer - measured in kg/m3, [pol., 'Superplastyfikator'], <br>
-Coarse Aggregate - measured in kg/m3, [pol., 'Kruszywo grube'], <br>
-Fine Aggregate - measured in kg/m3, [pol., 'Kruszywo drobne'], <br>
-Age - measured in days, [pol., 'Czas'], <br>
-Strength - measured in N/mm2, [pol., 'Wytrzymałość'].<br>
+### 2. Content
+Data consists of info about trips taken by service's members, their types, their age, their gender, stations of starting and ending trips, duration of trips etc.
 
-To predict concrete compressive strength of a particular batch, XGBoost machine learning model will be used. 
-XGBoost is an open-source software library which provides a regularizing gradient boosting framework.
+### 3. Acknowledgements
+Thanks to ford gobike service for providing data online.
 
 
- <p>Here is a quote from Tianqi Chen about XGBoost from Quora website:</p>
-<blockquote cite="https://www.quora.com/What-is-the-difference-between-the-R-gbm-gradient-boosting-machine-and-xgboost-extreme-gradient-boosting">
-The name xgboost, though, actually refers to the engineering goal to push the limit of computations resources for boosted tree algorithms. Which is the reason why many people use xgboost.
-</blockquote> 
+### 4. Data Analysis
+Database on which the analysis was performed consist of following features: <br>
+Trip Duration (seconds),<br>
+Start Time and Date, <br>
+End Time and Date, <br>
+Start Station ID, <br>
+Start Station Name, <br>
+Start Station Latitude, <br>
+Start Station Longitude, <br>
+End Station ID, <br>
+End Station Name,<br>
+End Station Latitude,<br>
+End Station Longitude,<br>
+Bike ID,<br>
+User Type,<br>
+Member Year of Birth,<br>
+Member Gender.<br>
 
 
-In the table presented below, first rows of database are presented:
-![baza danych]({{site.baseurl}}/assets/img/0_baza_danych.png)
-<br>
+### Distribution of the variable "member_gender"
 
-As it can be seen, the data is stuctured in tabular format, which allows to find the data easily and also manage it better. To get a grip on this database, summary has been presented below:
-![podsumowanie bazy danych]({{site.baseurl}}/assets/img/0_podsumowanie.png)
-
-It can be seen that Slag, Ash and Superplasticizer columns have zero values, which has to be filled using regression.<br>
-
-
-<br>
-Check for outliers: <br>
-![Odstające wartości]({{site.baseurl}}/assets/img/outliers.png)
-
-Based on graphs above, it can be assumed that Slag, Water, Superplasticizer, Fine Aggregate and Age columns have a few outliers. 
-The data of outliers is 10% part of the total data and may be replaced with substitute mean values.
-
-To visualize the data, multivariate analysis has beed conducted using seaborn library for python:  <br>
-![Analiza wymiarowa]({{site.baseurl}}/assets/img/analiza_wielowymiarowa.png)
-
-In the set of charts above, first observations can be made. At the same time columns with zero values are in display aswell. 
-That is why those values should be impute using Linear Regression by considering other features to predict them.<br>
-
-![Wybrane wykresy analizy]({{site.baseurl}}/assets/img/analiza_wykresy.png)
-
-![Wybranie kluczowych wartości]({{site.baseurl}}/assets/img/wykresy_podkreslenie.png)
+```
+df.groupBy('member_gender').agg(
+    F.expr("count(member_gender)").alias("No of records")).show()
+```
 
 <br>
-Above plots are showing application of Linear Regression. Imputed zero values are marked green and the rest is marked in blue. Imputed values fit the patterns.
+ <table style="width:300px">
+  <tr>
+    <th>member_gender</th>
+    <th>No of records</th>
+  </tr>
+  <tr>
+    <td>null</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>Female</td>
+    <td>98621</td>
+  </tr>
+  <tr>
+    <td>Other</td>
+    <td>6299</td>
+  </tr>
+  <tr>
+    <td>Male</td>
+    <td>348318</td>
+  </tr>
+</table> 
+
+<br>
+
+### The minimum, maximum and average age of bicycle rentals
+
+```
+df = df.withColumn("Age", 2017 - df.member_birth_year).alias("Age")
+df.groupBy('member_gender').agg(
+    F.expr("avg(Age)").alias("AVG Age"),
+    F.expr("min(Age)").alias("MIN Age"),
+    F.expr("max(Age)").alias("MAX Age")
+).withColumn('AVG Age', F.round(F.col('AVG Age'), 0).cast('integer')).show()
+```
+<br>
+
+ <table style="width:500px">
+  <tr>
+    <th>member_gender</th>
+    <th>AVG Age</th>
+    <th>MIN Age</th>
+    <th>MAX Age</th>
+  </tr>
+  <tr>
+    <td>null</td>
+    <td>null</td>
+    <td>null</td>
+    <td>null</td>
+  </tr>
+  <tr>
+    <td>Female</td>
+    <td>35</td>
+    <td>18</td>
+    <td>117</td>
+  </tr>
+  <tr>
+    <td>Other</td>
+    <td>37</td>
+    <td>18</td>
+    <td>117</td>
+  </tr>
+  <tr>
+    <td>Male</td>
+    <td>37</td>
+    <td>18</td>
+    <td>131</td>
+  </tr>
+</table> 
+
+<br>
+
+### The number of unique bikes
+<br>
+```
+df.select("bike_id").distinct().count()
+```
+<br>
+Result: 3673
+<br>
+### Number of unique bike stations
+
+```
+df.dropDuplicates(['start_station_name','end_station_name']).select('start_station_name').distinct().count()
+```
+Result: 272
+
+### Which bike was rented the longest and which was the shortest during the analyzed period (and for how long)
+
+#### MAX RENT TIME
+
+```
+aggData = df.groupBy('bike_id').agg(
+    F.expr("count(bike_id)").alias("Total No of rents"),
+    F.expr("avg(duration_sec)").alias("AVG Rent Time"),
+    F.expr("min(duration_sec)").alias("MIN Rent Time"),
+    F.expr("max(duration_sec)").alias("MAX Rent Time")
+).orderBy("MAX Rent Time",ascending=False)
+aggData.show(1)
+```
+
+<br>
+
+ <table style="width:700px">
+  <tr>
+    <th>bike_id</th>
+    <th>Total No of rents</th>
+    <th>AVG Rent Time</th>
+    <th>MIN Rent Time</th>
+    <th>MAX Rent Time</th>
+  </tr>
+  <tr>
+    <td>2231</td>
+    <td>95</td>
+    <td>2939</td>
+    <td>126</td>
+    <td>86369</td>
+  </tr>
+</table> 
+
+<br>
+
+#### MAX NUMBER OF RENTALS
+
+```
+aggData.orderBy("Total No of rents",ascending=False).show(1)
+```
+
+<br>
+
+ <table style="width:700px">
+  <tr>
+    <th>bike_id</th>
+    <th>Total No of rents</th>
+    <th>AVG Rent Time</th>
+    <th>MIN Rent Time</th>
+    <th>MAX Rent Time</th>
+  </tr>
+  <tr>
+    <td>68</td>
+    <td>457</td>
+    <td>903</td>
+    <td>85</td>
+    <td>22318</td>
+  </tr>
+</table> 
+
+<br>
+
+#### MIN RENT TIME
+
+```
+aggData.orderBy("MIN Rent Time",ascending=True).show(1)
+```
+
+<br>
+
+ <table style="width:700px">
+  <tr>
+    <th>bike_id</th>
+    <th>Total No of rents</th>
+    <th>AVG Rent Time</th>
+    <th>MIN Rent Time</th>
+    <th>MAX Rent Time</th>
+  </tr>
+  <tr>
+    <td>1238</td>
+    <td>110</td>
+    <td>1041</td>
+    <td>61</td>
+    <td>16288</td>
+  </tr>
+</table> 
+
+<br>
+
+#### HIGHEST AVG RENT TIME
+
+```
+aggData.orderBy("AVG Rent Time",ascending=False).show(1)
+```
+<br>
+
+ <table style="width:700px">
+  <tr>
+    <th>bike_id</th>
+    <th>Total No of rents</th>
+    <th>AVG Rent Time</th>
+    <th>MIN Rent Time</th>
+    <th>MAX Rent Time</th>
+  </tr>
+  <tr>
+    <td>3730</td>
+    <td>8</td>
+    <td>11461</td>
+    <td>598</td>
+    <td>79841</td>
+  </tr>
+</table> 
+
+<br>
+
+### Average duration of a single loan
+
+```
+df.select(mean('duration_sec').alias("AVG rent time")).show()
+```
+Result: 1099
+
+
+### Between which stations there was the greatest traffic
+```
+df.groupBy('start_station_name', 'end_station_name').agg(
+    F.expr("count(bike_id)").alias("Total No of connections"))\
+.orderBy("Total No of connections",ascending=False).show(1)
+```
+<br>
+
+ <table style="width:700px">
+  <tr>
+    <th>start_station_name</th>
+    <th>end_station_name</th>
+    <th>Total No of connections</th>
+
+  </tr>
+  <tr>
+    <td>San Francisco Ferry Building (Harry Bridges Plaza)</td>
+    <td>The Embarcadero at Sansome St</td>
+    <td>3344</td>
+  </tr>
+</table> 
+
+<br>
+
+### At what time during the day were the most bicycles rented
+
+```
+df.withColumn("Ex Time of Rent", date_format('start_time', 'HH:mm'))\
+.select("Ex Time of Rent")\
+.groupBy('Ex Time of Rent').count()\
+.orderBy("count",ascending=False).show(1) 
+```
+
+<br>
+
+ <table style="width:200px">
+  <tr>
+    <th>Ex Time of Rent</th>
+    <th>count</th>
+  </tr>
+  <tr>
+    <td>17:09</td>
+    <td>1208</td>
+  </tr>
+</table> 
+
+<br>
+### The average number of rentals for individual days of the week
+
+```
+df.withColumn("Rent day", date_format('start_time', 'EEEE')).select('Rent day')\
+.groupBy('Rent day').count()\
+.orderBy("count",ascending=False).show() 
+```
+<br>
+
+ <table style="width:200px">
+  <tr>
+    <th>Rent day</th>
+    <th>count</th>
+  </tr>
+  <tr>
+    <td>Tuesday</td>
+    <td>87865</td>
+  </tr>
+   <tr>
+    <td>Wednesday</td>
+    <td>87752</td>
+  </tr>
+   <tr>
+    <td>Thursday</td>
+    <td>85243</td>
+  </tr>
+   <tr>
+    <td>Monday</td>
+    <td>81410</td>
+  </tr>
+   <tr>
+    <td>Friday</td>
+    <td>81165</td>
+  </tr>
+   <tr>
+    <td>Saturday</td>
+    <td>50874</td>
+  </tr>
+   <tr>
+    <td>Sunday</td>
+    <td>45391</td>
+  </tr>
+</table> 
+
 <br>
 
 
-Feature engineering<br>
-Based on knowledge from construction engineering industry, two composite features has been created: water-cement ratio [pol., 'Współczynnik woda/cement'] and aggregate ratio [pol., 'Średnia kruszywa'].
+### The average number of rentals for individual months
+
+```
+df.withColumn("Rent month", date_format('start_time', 'MMMM'))\
+.select('Rent month').groupBy('Rent month').count()\
+.orderBy("count",ascending=False).show() 
+```
 <br>
 
-![Mapa zależności składników]({{site.baseurl}}/assets/img/zaleznosc_skladnikow.png)
-<br>
-From the above graphs, civil engineering doctrines can be spotted:<br>
-1. The strength of the concrete sample increases as the age of the sample increases.<br>
-2. The water-to-cement ratio has the positive correlation to concrete sample's strength.<br>
-3. The aggregate ratio have negative correlation to concrete sample's strength.<br>
+ <table style="width:200px">
+  <tr>
+    <th>Rent month</th>
+    <th>count</th>
+  </tr>
+  <tr>
+    <td>October</td>
+    <td>108937</td>
+  </tr>
+   <tr>
+    <td>September</td>
+    <td>98558</td>
+  </tr>
+   <tr>
+    <td>November</td>
+    <td>95612</td>
+  </tr>
+   <tr>
+    <td>December</td>
+    <td>86539</td>
+  </tr>
+   <tr>
+    <td>August</td>
+    <td>83292</td>
+  </tr>
+   <tr>
+    <td>July</td>
+    <td>44073</td>
+  </tr>
+   <tr>
+    <td>June</td>
+    <td>2689</td>
+  </tr>
+</table> 
 
-Above statements are visualized below:
-<br>
-<span>
-    <img src="/assets/img/doctrine_graphs13.png" style="width:33%">
-</span>
-<span>
-    <img src="/assets/img/doctrine_graphs23.png" style="width:33%">
-</span>
-<span>
-    <img src="/assets/img/doctrine_graphs33.png" style="width:33%">
-</span>
-<br>
-
-Exploring for Gaussians<br>
-![Wykresy Gaussa]({{site.baseurl}}/assets/img/wykresy_gaussa.png)
-
-KDE plots (described as Kernel Density Estimate) visualize the Probability Density of a continuous variable or in other words, data is infact a mixture of Gaussians. 
-On the below graphs correlation between age, water-to-cement ratio and aggregate to strength has been shown again. 
-Looking at strength vs age graph, we can spot two seperate clusters. It can indiciate that the concrete above certain age (80-100 days) has avarage strength.
-
-
-<br>
-<span>
-    <img src="/assets/img/gaussa_czas.png" style="width:33%">
-</span>
-<span>
-    <img src="/assets/img/gaussa_kruszywo.png" style="width:33%">
-</span>
-<span>
-    <img src="/assets/img/gaussa_wc.png" style="width:33%">
-</span>
 <br>
 
-Creating the model<br>
-Multiple linear regression
+### RDD dataDaily containing data aggregated down to the level of the day. Each day of the year (element in RDD) is to contain the following information:
+
+- 'date' : Date 
+- 'avg_duration_sec' : Average duration of rentals for the day
+- 'n_trips' : liczba wypożyczeń danego dnia
+- 'n_bikes' : number of rentals on a given day
+- 'n_subscriber' : number of rentals made by subscribers on a given day
+
+```
+dataDaily = df.withColumn("date", date_format('start_time', 'D'))\
+.groupBy('date').agg(
+    F.expr("avg(duration_sec)").alias("avg_duration_sec"),   
+    F.expr("count(bike_id)").alias("n_trips"),
+    countDistinct("bike_id").alias("n_bikes"),
+    count(when(col("user_type") == "Subscriber", True)).alias("n_subscriber"))\
+.withColumn('avg_duration_sec', F.round(F.col('avg_duration_sec'), 0).cast('integer'))\
+.orderBy("date",ascending=True) 
+
+dataDaily.show(5)
+```
 <br>
-![Model 01]({{site.baseurl}}/assets/img/01_model.png)
-![Tabela 01]({{site.baseurl}}/assets/img/01_tabela.png)
-![Wykres 01]({{site.baseurl}}/assets/img/01_wykres.png)
+<table style="width:600px">
+<tr>
+    <th>date</th>
+    <th>avg_duration_sec</th>
+    <th>n_trips</th>
+    <th>n_bikes</th>
+    <th>n_subscriber</th>
+</tr>
+<tr>
+    <td>179</td>
+    <td>1131</td>
+    <td>632</td>
+    <td>299</td>
+    <td>530</td>
+</tr>
+<tr>
+    <td>180</td>
+    <td>1077</td>
+    <td>1019</td>
+    <td>375</td>
+    <td>885</td>
+</tr>
+<tr>
+    <td>181</td>
+    <td>1013</td>
+    <td>1038</td>
+    <td>392</td>
+    <td>824</td>
+</tr>
+<tr>
+    <td>182</td>
+    <td>3204</td>
+    <td>475</td>
+    <td>255</td>
+    <td>189</td>
+</tr>
+ <tr>
+    <td>183</td>
+    <td>3082</td>
+    <td>523</td>
+    <td>257</td>
+    <td>153</td>
+ </tr>
 
-Ridge regressor <br>
-![Model 02]({{site.baseurl}}/assets/img/02_model.png)
-![Tabela 02]({{site.baseurl}}/assets/img/02_tabela.png)
+</table> 
 
-Decide on complexity of the model <br>
-Polynomial regression<br>
-![Model 03]({{site.baseurl}}/assets/img/03_model.png)
-![Tabela 03]({{site.baseurl}}/assets/img/03_tabela.png)
-![Wykres 03]({{site.baseurl}}/assets/img/03_wykres.png)
+<br>
 
-Support Vector Regressor<br>
-![Model 04]({{site.baseurl}}/assets/img/04_model.png)
-![Tabela 04]({{site.baseurl}}/assets/img/04_tabela.png)
 
-KNN (k-Nearest-Neighbor)<br>
-![Model 05]({{site.baseurl}}/assets/img/05_model.png)
-![Tabela 05]({{site.baseurl}}/assets/img/05_tabela.png)
+### Number of unique combinations of stations (x -> y == y -> x) for the day
 
-Decision Tree Regression<br>
-![Model 06]({{site.baseurl}}/assets/img/06_model.png)
-![Tabela 06]({{site.baseurl}}/assets/img/06_tabela.png)
+```
+df2 = df.withColumn("sl2", when(df['end_station_id'] < df['start_station_id'],  df['end_station_id'])\
+.otherwise(df['start_station_id']))\
+.withColumn("el2", when(df['end_station_id'] > df['start_station_id'],  df['end_station_id'])\
+.otherwise(df['start_station_id']))\
+.drop("start_station_id", "end_station_id")
 
-Random Forest Regression<br>
-![Model 07]({{site.baseurl}}/assets/img/07_model.png)
-![Tabela 07]({{site.baseurl}}/assets/img/07_tabela.png)
+df2_agg = df2.withColumn("date", date_format('start_time', 'D'))\
+.groupBy('date').agg(collect_set(struct(col('sl2'), col('el2'))).alias("n_routes")) 
 
-XGBoost<br>
-![Model 08]({{site.baseurl}}/assets/img/08_model.png)
-![Tabela 08]({{site.baseurl}}/assets/img/08_tabela.png)
+df2_agg.select("date", size("n_routes")).alias("n_routes")\
+.orderBy("date",ascending=True).show(5)
+```
 
-XGBoost Tuned<br>
-![Model 08]({{site.baseurl}}/assets/img/09_model.png)
-![Tabela 08]({{site.baseurl}}/assets/img/09_tabela.png)
+<br>
+
+<table style="width:200px">
+<tr>
+    <th>date</th>
+    <th>size(n_routes)</th>
+</tr>
+  <tr>
+    <td>179</td>
+    <td>292</td>
+  </tr>
+   <tr>
+    <td>180</td>
+    <td>384</td>
+  </tr>
+   <tr>
+    <td>181</td>
+    <td>390</td>
+  </tr>
+   <tr>
+    <td>182</td>
+    <td>208</td>
+  </tr>
+   <tr>
+    <td>183</td>
+    <td>190</td>
+  </tr>
+</table> 
+
+<br>
+
+
+
+### RDD key-value `bikeDaily` containing one element for each` "bike_id" `. The values ​​in the RDD are to be lists of the total daily use of a given bike in seconds (items of the list in chronological order).
+
+```
+bikeDaily = df.withColumn("date", date_format('start_time', 'D'))\
+.groupBy('bike_id').pivot('date').sum("duration_sec")
+
+bikeDaily.select('bike_id','259','260','261','262','263',).show(3)
+```
+<br>
+
+<table style="width:600px">
+<tr>
+    <th>bike_id</th>
+    <th>259</th>
+    <th>260</th>
+    <th>261</th>
+    <th>262</th>
+    <th>263</th>
+</tr>
+
+<tr>
+<td>2866</td>
+<td>1304</td>
+<td>null</td>
+<td>null</td>
+<td>596</td>
+<td>1805</td>
+</tr>
+<tr>
+<td>2122</td>
+<td>13834</td>
+<td>799</td>
+<td>null</td>
+<td>null</td>
+<td>2052</td>
+</tr>
+</table> 
+
+<br>
