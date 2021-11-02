@@ -19,6 +19,15 @@ https://github.com/krystianwarda/bike_rental_pyspark">
 https://github.com/krystianwarda/bike_rental_pyspark</a>
 <br>
 
+Code can be viewed at following kaggle page:
+<br>
+<a href="
+https://www.kaggle.com/krystianwarda/exploratory-data-analysis-with-pyspark">
+https://www.kaggle.com/krystianwarda/exploratory-data-analysis-with-pyspark</a>
+<br>
+
+
+
 
 
 ### 1. Context
