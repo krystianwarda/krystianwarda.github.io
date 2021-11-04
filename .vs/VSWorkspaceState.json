@@ -2,10 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\assets",
+    "\\assets\\css",
+    "\\assets\\css\\scss",
     "\\assets\\img",
     "\\_layouts",
     "\\_posts"
   ],
-  "SelectedNode": "\\assets\\img\\rower.jpg",
+  "SelectedNode": "\\assets\\img\\exploring.PNG",
   "PreviewInSolutionExplorer": false
 }

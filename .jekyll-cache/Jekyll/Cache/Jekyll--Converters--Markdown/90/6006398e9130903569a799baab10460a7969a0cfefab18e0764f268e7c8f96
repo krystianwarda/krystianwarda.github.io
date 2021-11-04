@@ -1,51 +1,36 @@
----
-layout: post
-title: Sales forecasting with times series data - Naive Forecasting, Gradient Boosting, XGBoost, Random Forest 
-date: 2021-11-01 00:00:00 +0300
-description: Youâ€™ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
-img: sales.jpg # Add image post (optional)
-tags: [forecasting, python] # add tag
----
+I"À&<p>Time series forecasting occurs when you make scientific predictions based on historical time stamped data. 
+It involves building models through historical analysis and using them to make observations and drive future strategic decision-making.</p>
 
-Time series forecasting occurs when you make scientific predictions based on historical time stamped data. 
-It involves building models through historical analysis and using them to make observations and drive future strategic decision-making.
+<p><br />
+<br /></p>
 
-<br>
-<br>
-
-Code can be viewed at following github page:
-<br>
-<a href="
-https://github.com/krystianwarda/Sales-forecasting">
+<p>Code can be viewed at following github page:
+<br />
+<a href=" https://github.com/krystianwarda/Sales-forecasting">
 https://github.com/krystianwarda/Sales-forecasting</a>
-<br>
+<br /></p>
 
-### Exploring the data
-<span>
-    <img src="/assets/img/exploring0.PNG" style="width:80%">
-</span>
+<h3 id="exploring-the-data">Exploring the data</h3>
+<p><span>
+    <img src="/assets/img/exploring0.PNG" style="width:80%" />
+</span></p>
 
+<p><span>
+    <img src="/assets/img/exploring.PNG" style="width:80%" />
+</span></p>
 
-<span>
-    <img src="/assets/img/exploring.PNG" style="width:80%">
-</span>
-
-
-
-### Checking the amounts of zeros in dataframe
-```
-plt.rcParams['figure.figsize']=(10,10)
+<h3 id="checking-the-amounts-of-zeros-in-dataframe">Checking the amounts of zeros in dataframe</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>plt.rcParams['figure.figsize']=(10,10)
 sns.heatmap(X_train_data == 0, yticklabels = False, cbar=False, cmap = 'viridis')
-```
+</code></pre></div></div>
 
-<span>
-    <img src="/assets/img/zeros.PNG" style="width:50%">
-</span>
+<p><span>
+    <img src="/assets/img/zeros.PNG" style="width:50%" />
+</span></p>
 
-### Data cleaning 
+<h3 id="data-cleaning">Data cleaning</h3>
 
-```
-X_train_data['date'] = pd.to_datetime(X_train_data['date'], format='%d%b%Y')
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X_train_data['date'] = pd.to_datetime(X_train_data['date'], format='%d%b%Y')
 
 
 #merging the sales values with the features dataframe
@@ -58,18 +43,16 @@ X_train_data["sales"] = ""
 
 
 for row in y_train_data.itertuples():
-    X_train_data.loc[((X_train_data['key']==row.key) & (X_train_data['date'] == row.date)), 'sales'] = row.y
+    X_train_data.loc[((X_train_data['key']==row.key) &amp; (X_train_data['date'] == row.date)), 'sales'] = row.y
     
     
 #Checking the merg
 display(X_train_data.head())
-```
+</code></pre></div></div>
 
+<h3 id="analyzing-the-sales-data">Analyzing the sales data</h3>
 
-### Analyzing the sales data
-
-```
-X_train_plot = X_train_data.copy()
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>X_train_plot = X_train_data.copy()
 uniqueValues = X_train_plot['key'].unique()
 
 fig = go.Figure()
@@ -84,22 +67,20 @@ for unique in uniqueValues:
 fig.update_layout(title="Try Clicking on the Legend Items!")
 
 fig.show()  
-```
+</code></pre></div></div>
 
-<span>
-    <img src="/assets/img/analyze.PNG" style="width:90%">
-</span>
+<p><span>
+    <img src="/assets/img/analyze.PNG" style="width:90%" />
+</span></p>
 
-
-#### Comparing data from 2016 to one from 2017
-```
-start_date_train = np.datetime64('2016-01-01')
+<h4 id="comparing-data-from-2016-to-one-from-2017">Comparing data from 2016 to one from 2017</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start_date_train = np.datetime64('2016-01-01')
 end_date_train = np.datetime64('2016-12-31')
 start_date_test = np.datetime64('2017-01-01')
 end_date_test = np.datetime64('2017-12-31')
  
-train = X_train_data.loc[(X_train_data['date'] > start_date_train) & (X_train_data['date'] <= end_date_train)]
-test = X_train_data.loc[(X_train_data['date'] > start_date_test) & (X_train_data['date'] <= end_date_test)]
+train = X_train_data.loc[(X_train_data['date'] &gt; start_date_train) &amp; (X_train_data['date'] &lt;= end_date_train)]
+test = X_train_data.loc[(X_train_data['date'] &gt; start_date_test) &amp; (X_train_data['date'] &lt;= end_date_test)]
 
 train = train.fillna(train.mean())
 test = test.fillna(test.mean())
@@ -124,46 +105,39 @@ for unique in uniqueValues:
     
 fig2.update_layout(title="Try Clicking on the Legend Items!")
 fig2.show()
-```
-<span>
-    <img src="/assets/img/naive.png" style="width:90%">
-</span>
+</code></pre></div></div>
+<p><span>
+    <img src="/assets/img/naive.png" style="width:90%" />
+</span></p>
 
-
-#### Compensating missing data
-```
-from impyute.imputation.cs import mice
+<h4 id="compensating-missing-data">Compensating missing data</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from impyute.imputation.cs import mice
 imputed = mice(X.values)
 df = pd.DataFrame(imputed, index = X.index, columns = X.columns)
 X_train_mice = df.copy()
 X_train_mice = X_train_mice.convert_dtypes(convert_floating=True)
-```
+</code></pre></div></div>
 
-#### One-hot encoding
+<h4 id="one-hot-encoding">One-hot encoding</h4>
 
-```
-encoded = pd.get_dummies(X_train_mice.key)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>encoded = pd.get_dummies(X_train_mice.key)
 X_train_mice = pd.concat([X_train_mice, encoded], axis=1)
 X_train_mice.shape
 del X_train_mice['key']
-```
+</code></pre></div></div>
 
-#### Data split - train-test data
+<h4 id="data-split---train-test-data">Data split - train-test data</h4>
 
-```
-from sklearn.model_selection import train_test_split
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=21)
 y_train = y_train.astype(np.float64)
 X_train = X_train.astype(np.float64)
 X_test = X_test.astype(np.float64)
 y_test = y_test.astype(np.float64)
-```
+</code></pre></div></div>
 
-
-
-### Gradient Boosting Regressor
-```
-from sklearn.ensemble import GradientBoostingRegressor
+<h3 id="gradient-boosting-regressor">Gradient Boosting Regressor</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 
 regressor = GradientBoostingRegressor(max_depth=2, n_estimators=3, learning_rate=1.0)
@@ -176,31 +150,28 @@ y_pred_gbr = best_regressor.predict(X_test)
 
 mean = np.mean(y_pred_gbr)
 for sales in y_pred_gbr:
-    if sales < 0:
+    if sales &lt; 0:
         sales = mean
-    elif sales > 15000:
+    elif sales &gt; 15000:
         sales = mean
         
 print('WMAPE: ', calculate_mean_absolute_percentage_error_2(y_test, y_pred_gbr).values)
 wmape.append(calculate_mean_absolute_percentage_error_2(y_test, y_pred_gbr).values)
 
 show_model_performance(y_pred_gbr)
-```
-<span>
-    <img src="/assets/img/gbr1.png" style="width:33%">
+</code></pre></div></div>
+<p><span>
+    <img src="/assets/img/gbr1.png" style="width:33%" />
 </span>
 <span>
-    <img src="/assets/img/gbr2.png" style="width:33%">
+    <img src="/assets/img/gbr2.png" style="width:33%" />
 </span>
 <span>
-    <img src="/assets/img/gbr3.png" style="width:33%">
-</span>
+    <img src="/assets/img/gbr3.png" style="width:33%" />
+</span></p>
 
-
-
-### Extreme Gradient Boosting Regressor
-```
-import xgboost as xgb
+<h3 id="extreme-gradient-boosting-regressor">Extreme Gradient Boosting Regressor</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import xgboost as xgb
 train_dmatrix = xgb.DMatrix(data = X_train, label = y_train)
 test_dmatrix = xgb.DMatrix(data = X_test, label = y_test)
   
@@ -213,58 +184,55 @@ y_pred_XGB = xgb.predict(X_test)
 
 mean = np.mean(y_pred_XGB)
 for sales in y_pred_XGB:
-    if sales < 0:
+    if sales &lt; 0:
         sales = mean
-    elif sales > 15000:
+    elif sales &gt; 15000:
         sales = mean
 
 print('WMAPE: ', calculate_mean_absolute_percentage_error_2(y_test, y_pred_XGB).values)
 wmape.append(calculate_mean_absolute_percentage_error_2(y_test, y_pred_XGB).values)
 
 show_model_performance(y_pred_XGB)
-```
-<span>
-    <img src="/assets/img/xgb1.png" style="width:33%">
+</code></pre></div></div>
+<p><span>
+    <img src="/assets/img/xgb1.png" style="width:33%" />
 </span>
 <span>
-    <img src="/assets/img/xgb2.png" style="width:33%">
+    <img src="/assets/img/xgb2.png" style="width:33%" />
 </span>
 <span>
-    <img src="/assets/img/xgb3.png" style="width:33%">
-</span>
+    <img src="/assets/img/xgb3.png" style="width:33%" />
+</span></p>
 
-
-### Random Forest Regressor
-```
-from sklearn.ensemble import RandomForestRegressor
+<h3 id="random-forest-regressor">Random Forest Regressor</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from sklearn.ensemble import RandomForestRegressor
 regressor = RandomForestRegressor(n_estimators = 1000, random_state = 42)
 regressor.fit(X_train, y_train)
 rdforrest_pred = regressor.predict(X_test)
 
 mean = np.mean(rdforrest_pred)
 for sales in rdforrest_pred:
-    if sales < 0:
+    if sales &lt; 0:
         sales = mean
 
 print('WMAPE: ', calculate_mean_absolute_percentage_error_2(y_test, rdforrest_pred).values)
 wmape.append(calculate_mean_absolute_percentage_error_2(y_test, rdforrest_pred).values)
 
 show_model_performance(rdforrest_pred)
-```
-<span>
-    <img src="/assets/img/rf1.png" style="width:33%">
+</code></pre></div></div>
+<p><span>
+    <img src="/assets/img/rf1.png" style="width:33%" />
 </span>
 <span>
-    <img src="/assets/img/rf2.png" style="width:33%">
+    <img src="/assets/img/rf2.png" style="width:33%" />
 </span>
 <span>
-    <img src="/assets/img/rf3.png" style="width:33%">
-</span>
+    <img src="/assets/img/rf3.png" style="width:33%" />
+</span></p>
 
-### Summary
+<h3 id="summary">Summary</h3>
 
-```
-fig3 = go.Figure(data=[go.Table(
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fig3 = go.Figure(data=[go.Table(
     header=dict(values=list([str('Model'),str('Weighted Mean Absolute Percentage Error')]),
                 fill_color='darkslategray',
                 align='center',
@@ -277,7 +245,8 @@ fig3 = go.Figure(data=[go.Table(
                       ])
 
 fig3.show()
-```
-<span>
-    <img src="/assets/img/forecasting_summary.png" style="width:100%">
-</span>
+</code></pre></div></div>
+<p><span>
+    <img src="/assets/img/forecasting_summary.png" style="width:100%" />
+</span></p>
+:ET
