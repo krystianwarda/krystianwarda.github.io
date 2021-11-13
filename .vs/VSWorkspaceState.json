@@ -4,10 +4,9 @@
     "\\assets",
     "\\assets\\css",
     "\\assets\\css\\scss",
-    "\\assets\\img",
     "\\_layouts",
     "\\_posts"
   ],
-  "SelectedNode": "\\assets\\img\\exploring.PNG",
+  "SelectedNode": "\\_config.yml",
   "PreviewInSolutionExplorer": false
 }
