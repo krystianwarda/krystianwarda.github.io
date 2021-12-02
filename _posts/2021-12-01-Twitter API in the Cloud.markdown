@@ -18,7 +18,7 @@ in Q4 of 2021. Data was collected on 01.12.2021 and cosist of 3000 tweets. Code 
 ## 2. Project architecture
 
 <span>
-    <img src="/assets/img/architecture.PNG" style="width:80%">
+    <img src="/assets/img/architecture.png" style="width:80%">
 </span>
 
 Connecting to Google Cloud SQL Platform:
@@ -103,7 +103,7 @@ ax = (df.u_device.value_counts()/len(df)*100).iloc[:5].plot(kind="bar", rot=0)
 ax.set_yticks(np.arange(0, 60, 10));
 ```
 <span>
-    <img src="/assets/img/device.PNG" style="width:80%">
+    <img src="/assets/img/device.png" style="width:80%">
 </span>
 
 
@@ -113,7 +113,7 @@ df['u_created_at_year'] = pd.DatetimeIndex(df['u_created_at']).year
 ax = sns.barplot(x="u_created_at_year", y="u_created_at_year", data=df, estimator=lambda x: len(x) / len(df) * 100)
 ```
 <span>
-    <img src="/assets/img/join_year.PNG" style="width:80%" >
+    <img src="/assets/img/join_year.png" style="width:80%" >
 </span>
 
 ```
@@ -121,7 +121,7 @@ df['created_at_hour'] = df['created_at'].apply(lambda x: datetime.strptime(x, '%
 ax = sns.barplot(x='created_at_hour', y='created_at_hour', data=df, estimator=lambda x: len(x) / len(df) * 100)
 ```
 <span>
-    <img src="/assets/img/post_date.PNG" style="width:80%">
+    <img src="/assets/img/post_date.png" style="width:80%">
 </span>
 
 ```
@@ -130,5 +130,5 @@ ax = sns.barplot(x="u_followers_count_h", y="u_followers_count_h", data=df, esti
 ```
 
 <span>
-    <img src="/assets/img/followers.PNG" style="width:80%">
+    <img src="/assets/img/followers.png" style="width:80%">
 </span>
