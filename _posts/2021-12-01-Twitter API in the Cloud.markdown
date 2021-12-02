@@ -4,7 +4,7 @@ title: Analysing tweets from Twitter API using AWS EC2 and Google Clound SQL con
 date: 2021-12-01 00:00:00 +0300
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: twitter_granica.png # Add image post (optional)
-tags: [pyspark, python] # add tag
+tags: [cloud, python, API] # add tag
 ---
 
 
