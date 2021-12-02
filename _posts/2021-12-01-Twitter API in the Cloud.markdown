@@ -125,7 +125,7 @@ ax = sns.barplot(x="u_created_at_year", y="u_created_at_year", data=df, estimato
     <img src="/assets/img/join_year.png" style="width:80%" >
 </span>
 
-The graph shown above indicates that the most active authors made account within year 2020-2021.
+The graph shown above indicates that the most active authors made account within years 2020-2021.
 
 ```
 df['created_at_hour'] = df['created_at'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S')).dt.hour
