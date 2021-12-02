@@ -39,6 +39,10 @@ def store_data(column_name):
 Connecting with Twitter API (part of code)
 ```
 class TwitterClient():
+    """
+    Class for connecting with twitter API.
+    """
+
     def __init__(self, twitter_user=None):
         self.auth = TwitterAuthenticator().authenticate_twitter_app()
         self.twitter_client = API(self.auth)
@@ -49,6 +53,9 @@ class TwitterClient():
         return self.twitter_client
 
 class TwitterAuthenticator():
+    """
+    Class for API authorisation.
+    """
     def authenticate_twitter_app(self):
         auth = OAuthHandler(CONSUMER_KEY,
                             CONSUMER_SECRET)
