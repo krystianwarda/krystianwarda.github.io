@@ -1,0 +1,14 @@
+I"<h3 id="1-context">1. Context</h3>
+<p>The project goal was to extract data from Twitter API and transfer them to MySql database for further data analysis.</p>
+
+<p>The data was created from tweets traffic, which contains two hashtags: granica, Białoruś. Those hashtags were popular during Poland border crisis 
+in Q4 of 2021.</p>
+
+<h3 id="2-project-architecture">2. Project architecture</h3>
+
+<p><span>
+    <img src="/assets/img/architecture.PNG" style="width:100%" />
+</span></p>
+
+<h3 id="3-data-analysis">3. Data analysis</h3>
+:ET

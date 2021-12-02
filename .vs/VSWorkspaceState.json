@@ -4,9 +4,10 @@
     "\\assets",
     "\\assets\\css",
     "\\assets\\css\\scss",
+    "\\assets\\img",
     "\\_layouts",
     "\\_posts"
   ],
-  "SelectedNode": "\\_config.yml",
+  "SelectedNode": "\\_posts\\2021-09-01-Forecasting sales with times series modeling.markdown",
   "PreviewInSolutionExplorer": false
 }

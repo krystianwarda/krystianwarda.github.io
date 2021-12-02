@@ -1,0 +1,53 @@
+I"8	<h3 id="1-context">1. Context</h3>
+<p>The project goal was to extract data from Twitter API and transfer it to MySql database for further data analysis.</p>
+
+<p>The data was created from tweets traffic, which contains two hashtags: ‘granica’, ‘białoruś’. Those hashtags were popular during Poland border crisis 
+in Q4 of 2021.</p>
+
+<h3 id="2-project-architecture">2. Project architecture</h3>
+
+<p><span>
+    <img src="/assets/img/architecture.PNG" style="width:100%" />
+</span></p>
+
+<p><code class="language-plaintext highlighter-rouge">
+def store_data(id, created_at, u_screen_name, u_name, u_id, u_location,\
+                u_description, u_followers_count, u_friends_count, u_favourites_count,\
+                    u_statuses_count, u_created_at, text, source, geo, coordinates, place, \
+                        quote_count, reply_count, retweet_count, favorite_count):
+    mydb = mysql.connector.connect(host='00.000.000.000', port=0000,user='user_name',passwd='',db='db_name', charset='utf8mb4')
+    cursor = mydb.cursor()
+    table_name = 'table_name'
+    insert_query = f"INSERT INTO {table_name} (id, created_at, u_screen_name, u_name, u_id, u_location,\
+                u_description, u_followers_count, u_friends_count, u_favourites_count,\
+                    u_statuses_count, u_created_at, text, source, geo, coordinates, place, \
+                        quote_count, reply_count, retweet_count, favorite_count) VALUES \
+                             (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    cursor.execute(insert_query, (id, created_at, u_screen_name, u_name, u_id, u_location,\
+                u_description, u_followers_count, u_friends_count, u_favourites_count,\
+                    u_statuses_count, u_created_at, text, source, geo, coordinates, place, \
+                        quote_count, reply_count, retweet_count, favorite_count))
+    mydb.commit()
+    cursor.close()
+    mydb.close()
+    return
+   </code></p>
+
+<h3 id="3-data-analysis">3. Data analysis</h3>
+
+<p><span>
+    <img src="/assets/img/device.PNG" style="width:70%" />
+</span></p>
+
+<p><span>
+    <img src="/assets/img/join_year.PNG" style="width:70%" />
+</span></p>
+
+<p><span>
+    <img src="/assets/img/post_date.PNG" style="width:70%" />
+</span></p>
+
+<p><span>
+    <img src="/assets/img/followers.PNG" style="width:70%" />
+</span></p>
+:ET
