@@ -130,5 +130,5 @@ ax = sns.barplot(x="u_followers_count_h", y="u_followers_count_h", data=df, esti
 ```
 
 <span>
-    <img src="/assets/img/followers.PNG" style="width:80%">
+    <img src="/assets/img/followers.png" style="width:80%">
 </span>
