@@ -106,6 +106,8 @@ ax.set_yticks(np.arange(0, 60, 10));
     <img src="/assets/img/device.png" style="width:80%">
 </span>
 
+The most surprising thing from the above graph is that nearly 40% of tweets that particular day was posted using desktop.
+
 
 ```
 df['u_created_at'] = df['u_created_at'].apply(lambda x: datetime.strptime(x, '%a %b %d %X %z %Y'))
@@ -116,6 +118,8 @@ ax = sns.barplot(x="u_created_at_year", y="u_created_at_year", data=df, estimato
     <img src="/assets/img/join_year.png" style="width:80%" >
 </span>
 
+The graph shown above indicates that the most active authors made account within year 2020-2021.
+
 ```
 df['created_at_hour'] = df['created_at'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S')).dt.hour
 ax = sns.barplot(x='created_at_hour', y='created_at_hour', data=df, estimator=lambda x: len(x) / len(df) * 100)
@@ -124,11 +128,5 @@ ax = sns.barplot(x='created_at_hour', y='created_at_hour', data=df, estimator=la
     <img src="/assets/img/post_date.png" style="width:80%">
 </span>
 
-```
-df['u_followers_count_h'] = (df['u_followers_count']//500)*500
-ax = sns.barplot(x="u_followers_count_h", y="u_followers_count_h", data=df, estimator=lambda x: len(x) / len(df) * 100, order=plot_order[0:10])
-```
-
-<span>
-    <img src="/assets/img/followers.png" style="width:80%">
-</span>
+The graph of daily rhytm of twitter activity shows that significant part of tweets were made during working hours. It may mean that
+this particular Polish Border topic is so engaging, that people decides to tweet even from work.

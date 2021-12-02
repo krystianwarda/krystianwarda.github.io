@@ -1,0 +1,111 @@
+I"f<h2 id="1-context">1. Context</h2>
+<p>The project goal was to extract data from Twitter API and transfer it to MySql database for further data analysis. 
+The Twitter API allows to stream public Tweets from the platform in real-time so that basic metrics about them can be obtained.</p>
+
+<p>The data was created from tweets traffic, which contains two hashtags: ‘granica’, ‘białoruś’. Those hashtags were popular during Poland border crisis 
+in Q4 of 2021. Data was collected on 01.12.2021 and cosist of 3000 tweets. Code was written using python programming langugage.</p>
+
+<h2 id="2-project-architecture">2. Project architecture</h2>
+
+<p><span>
+    <img src="/assets/img/architecture.png" style="width:80%" />
+</span></p>
+
+<p>Connecting to Google Cloud SQL Platform:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def store_data(column_name):
+    mydb = mysql.connector.connect(host='00.000.000.000', port=0000, \
+        user='user_name',passwd='',db='db_name', charset='utf8mb4')
+    cursor = mydb.cursor()
+    table_name = 'table_name'
+    insert_query = f"INSERT INTO {table_name} (column_name) VALUES (%s)"
+    cursor.execute(insert_query, (id, column_name))
+    mydb.commit()
+    cursor.close()
+    mydb.close()
+    return
+
+</code></pre></div></div>
+<p>Connecting with Twitter API (part of code)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class TwitterClient():
+    def __init__(self, twitter_user=None):
+        self.auth = TwitterAuthenticator().authenticate_twitter_app()
+        self.twitter_client = API(self.auth)
+
+        self.twitter_user = twitter_user
+
+    def get_twitter_client_api(self):
+        return self.twitter_client
+
+class TwitterAuthenticator():
+    def authenticate_twitter_app(self):
+        auth = OAuthHandler(CONSUMER_KEY,
+                            CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN,
+                              ACCESS_TOKEN_SECRET)
+        return auth
+
+class TwitterStreamer():
+    """
+    Class for streaming and processing live tweets.
+    """
+
+    def __init__(self):
+        self.twitter_authenticator = TwitterAuthenticator()
+
+    def stream_tweets(self, fetched_tweets_filename,):  
+        listener = TwitterListener(fetched_tweets_filename,)
+        auth = self.twitter_authenticator.authenticate_twitter_app()
+        stream = Stream(auth, listener)
+        stream.filter(track=['granica', 'bialorus'])
+
+</code></pre></div></div>
+
+<h2 id="3-cloud-usage-monitoring">3. Cloud usage monitoring</h2>
+
+<p>Cloud monitoring is important process of reviewing and managing the operational workflow and processes within a cloud infrastructure or asset.
+Additionaly due to payment methods ‘pay for what you use’, it is crucial to control cloud infrastructure, that is why AWS E2 and Google Cloud
+are providing with following monitoring tools:</p>
+
+<h3 id="aws-ec2-usage-monitoring">AWS EC2 usage monitoring</h3>
+<p><span>
+    <img src="/assets/img/aws_cloud.PNG" style="width:80%" />
+</span></p>
+
+<h3 id="google-cloud-platform-sql-usage-monitoring">Google Cloud Platform SQL usage monitoring</h3>
+<p><span>
+    <img src="/assets/img/gcp_sql.PNG" style="width:80%" />
+</span></p>
+
+<h2 id="4-data-analysis">4. Data analysis</h2>
+<p>Data cleaning and data manipulation were performed using Pandas framework.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df['u_device'] = df['source'].apply(lambda s: s[s.find('&gt;')+1:s.find('&lt;/a&gt;')])
+ax = (df.u_device.value_counts()/len(df)*100).iloc[:5].plot(kind="bar", rot=0)
+ax.set_yticks(np.arange(0, 60, 10));
+</code></pre></div></div>
+<p><span>
+    <img src="/assets/img/device.png" style="width:80%" />
+</span></p>
+
+<p>The most surprising thing from the above graph is that nearly 40% of tweets that particular day was posted using desktop.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df['u_created_at'] = df['u_created_at'].apply(lambda x: datetime.strptime(x, '%a %b %d %X %z %Y'))
+df['u_created_at_year'] = pd.DatetimeIndex(df['u_created_at']).year
+ax = sns.barplot(x="u_created_at_year", y="u_created_at_year", data=df, estimator=lambda x: len(x) / len(df) * 100)
+</code></pre></div></div>
+<p><span>
+    <img src="/assets/img/join_year.png" style="width:80%" />
+</span></p>
+
+<p>The graph shown above indicates that the most active authors made account within year 2020-2021.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>df['created_at_hour'] = df['created_at'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d %H:%M:%S')).dt.hour
+ax = sns.barplot(x='created_at_hour', y='created_at_hour', data=df, estimator=lambda x: len(x) / len(df) * 100)
+</code></pre></div></div>
+<p><span>
+    <img src="/assets/img/post_date.png" style="width:80%" />
+</span></p>
+
+<p>The graph of Daily rhytm of twitter activity shows that significant part of tweets were made during working hours. It may mean that
+this particular Polish Border topic is so engaging, that people decides to tweet even from work.</p>
+:ET
